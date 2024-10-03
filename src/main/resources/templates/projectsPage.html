@@ -5,7 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-    <p>This is a projects page! Some projects here!</p>
-    <a href="/"><button>Cancel!</button></a>
+<p>This is a projects page! Some projects here!</p>
+<a href="/newProjectPage"><button>Create new project!</button></a>
+
+<table>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.projectId}"></td>
+        <td th:text="${project.projectName}"></td>
+        <td th:text="${project.projectDescription}"></td>
+        <td><a th:href="@{/projectsPage/{projectId}(projectId=${project.projectId})}">Edit</a></td>
+        <td><a th:href="@{/deleteProject/{projectId}(projectId=${project.projectId})}">Delete</a></td>
+    </tr>
+</table>
 </body>
 </html>
