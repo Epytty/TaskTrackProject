@@ -1,8 +1,6 @@
-CREATE TABLE IF NOT EXISTS projects_table
+CREATE TABLE IF NOT EXISTS projects
 (
-    project_id BIGSERIAL PRIMARY KEY ,
-    project_name  VARCHAR(100) NOT NULL ,
-    project_description VARCHAR(254) NOT NULL ,
+    id BIGSERIAL PRIMARY KEY ,
+    name VARCHAR(100) NOT NULL ,
+    description VARCHAR(254) NOT NULL ,
 );
-
-GRANT ALL PRIVILEGES ON DATABASE projects_table TO admin;

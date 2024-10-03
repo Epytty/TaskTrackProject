@@ -5,17 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-<p>This is a projects page! Some projects here!</p>
-<a href="/newProjectPage"><button>Create new project!</button></a>
+    <p>This is a projects page! Some projects here!</p>
+    <p>Create new project!</p>
+    <form action="/projectsPage" method="post">
+        <table>
+            <td><p>Заголовок проекта:</p><input class="read" type="text" name="name"></td>
+            <td><p>Описание проекта:</p><input class="read" type="text" name="description"></td>
+        </table>
+        <button type="submit">Create</button>
+    </form>
 
-<table>
-    <tr th:each="project : ${projects}">
-        <td th:text="${project.projectId}"></td>
-        <td th:text="${project.projectName}"></td>
-        <td th:text="${project.projectDescription}"></td>
-        <td><a th:href="@{/projectsPage/{projectId}(projectId=${project.projectId})}">Edit</a></td>
-        <td><a th:href="@{/deleteProject/{projectId}(projectId=${project.projectId})}">Delete</a></td>
-    </tr>
-</table>
+    <table>
+        <tr th:each="project : ${Projects}">
+            <td th:text="${project.id}"></td>
+            <td th:text="${project.name}"></td>
+            <td th:text="${project.description}"></td>
+        </tr>
+    </table>
 </body>
 </html>

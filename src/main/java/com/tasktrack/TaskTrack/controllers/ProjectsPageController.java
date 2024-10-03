@@ -1,7 +1,7 @@
 package com.tasktrack.TaskTrack.controllers;
 
-import com.tasktrack.TaskTrack.models.ProjectsEntity;
-import com.tasktrack.TaskTrack.models.ProjectsService;
+import com.tasktrack.TaskTrack.entities.Project;
+import com.tasktrack.TaskTrack.services.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,31 +18,31 @@ public class ProjectsPageController {
 
     @GetMapping("/projectsPage")
     public String projectsPage(Model model) {
-        List<ProjectsEntity> project = projectsService.getAllProjects();
+        List<Project> project = projectsService.getAllProjects();
         model.addAttribute("project", project);
         return "projectsPage";
     }
 
-    @GetMapping("/newProjectPage")
-    public String newProjectPage(Model model) {
-        ProjectsEntity project = new ProjectsEntity();
-        model.addAttribute("project", project);
-        return "newProjectPage";
-    }
-    @PostMapping
-    public String createProject(@RequestParam String projectName, @RequestParam String projectDescription) {
-        ProjectsEntity project = new ProjectsEntity(projectName, projectDescription);
+//    @GetMapping("/newProjectPage")
+//    public String newProjectPage(Model model) {
+//        ProjectsEntity project = new ProjectsEntity();
+//        model.addAttribute("project", project);
+//        return "newProjectPage";
+//    }
+    @PostMapping("/projectsPage")
+    public String createProject(@RequestParam String name, @RequestParam String description) {
+        Project project = new Project(name, description);
         projectsService.saveProject(project);
-        return "redirect:/projectsPage";
+        return "projectsPage";
     }
 
     @GetMapping("/{project_id}")
-    public Optional<ProjectsEntity> getProjectById(@PathVariable Long projectId) {
-        return projectsService.getProjectById(projectId);
+    public Optional<Project> getProjectById(@PathVariable Long id) {
+        return projectsService.getProjectById(id);
     }
 
     @DeleteMapping("/{project_id}")
-    public void deleteUser(@PathVariable Long projectId) {
-        projectsService.deleteProject(projectId);
+    public void deleteUser(@PathVariable Long id) {
+        projectsService.deleteProject(id);
     }
 }
