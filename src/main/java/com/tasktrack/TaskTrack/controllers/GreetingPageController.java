@@ -9,7 +9,7 @@ public class GreetingPageController {
 
     @GetMapping("/")
     public String greetingPage(Model model) {
-        return "greetingPage";
+        return "greeting";
     }
 }
 
