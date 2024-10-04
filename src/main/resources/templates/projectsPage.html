@@ -16,11 +16,11 @@
     </form>
 
     <table>
-        <tr th:each="project : ${Projects}">
+        <th:block th:each="project : ${project}">
             <td th:text="${project.id}"></td>
             <td th:text="${project.name}"></td>
             <td th:text="${project.description}"></td>
-        </tr>
+        </th:block>
     </table>
 </body>
 </html>

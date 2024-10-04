@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Project {
+public class ProjectsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

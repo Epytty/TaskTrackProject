@@ -1,6 +1,6 @@
 package com.tasktrack.TaskTrack.controllers;
 
-import com.tasktrack.TaskTrack.entities.Project;
+import com.tasktrack.TaskTrack.entities.ProjectsEntity;
 import com.tasktrack.TaskTrack.services.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,26 +18,20 @@ public class ProjectsPageController {
 
     @GetMapping("/projectsPage")
     public String projectsPage(Model model) {
-        List<Project> project = projectsService.getAllProjects();
+        List<ProjectsEntity> project = projectsService.getAllProjects();
         model.addAttribute("project", project);
         return "projectsPage";
     }
 
-//    @GetMapping("/newProjectPage")
-//    public String newProjectPage(Model model) {
-//        ProjectsEntity project = new ProjectsEntity();
-//        model.addAttribute("project", project);
-//        return "newProjectPage";
-//    }
     @PostMapping("/projectsPage")
     public String createProject(@RequestParam String name, @RequestParam String description) {
-        Project project = new Project(name, description);
+        ProjectsEntity project = new ProjectsEntity(name, description);
         projectsService.saveProject(project);
         return "projectsPage";
     }
 
     @GetMapping("/{project_id}")
-    public Optional<Project> getProjectById(@PathVariable Long id) {
+    public Optional<ProjectsEntity> getProjectById(@PathVariable Long id) {
         return projectsService.getProjectById(id);
     }
 
