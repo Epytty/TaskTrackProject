@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Projects Page</title>
 </head>
 <body>
-    <p>This is a projects page! Some projects here!</p>
-    <p>Create new project!</p>
-    <form action="/projectsPage" method="post">
-        <table>
-            <td><p>Заголовок проекта:</p><input class="read" type="text" name="name"></td>
-            <td><p>Описание проекта:</p><input class="read" type="text" name="description"></td>
-        </table>
-        <button type="submit">Create</button>
-    </form>
+<p>This is a projects page! Some projects here!</p>
+<a href="/newProjectPage"><button>Create new project</button></a>
 
-    <table>
-        <th:block th:each="project : ${project}">
-            <td th:text="${project.id}"></td>
-            <td th:text="${project.name}"></td>
-            <td th:text="${project.description}"></td>
-        </th:block>
-    </table>
+<table>
+    <tr th:each="project : ${project}">
+        <td th:text="${project.id}"></td>
+        <td th:text="${project.name}"></td>
+        <td th:text="${project.description}"></td>
+    </tr>
+</table>
 </body>
 </html>

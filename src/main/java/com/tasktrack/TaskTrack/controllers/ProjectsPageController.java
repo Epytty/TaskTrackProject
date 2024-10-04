@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class ProjectsPageController {
@@ -23,20 +22,26 @@ public class ProjectsPageController {
         return "projectsPage";
     }
 
-    @PostMapping("/projectsPage")
+    @GetMapping("/newProjectPage")
+    public String newProjectPage(Model model) {
+        ProjectsEntity project = new ProjectsEntity();
+        model.addAttribute("project", project);
+        return "newProjectPage";
+    }
+    @PostMapping("/newProjectPage")
     public String createProject(@RequestParam String name, @RequestParam String description) {
         ProjectsEntity project = new ProjectsEntity(name, description);
         projectsService.saveProject(project);
-        return "projectsPage";
+        return "redirect:/projectsPage";
     }
 
-    @GetMapping("/{project_id}")
-    public Optional<ProjectsEntity> getProjectById(@PathVariable Long id) {
-        return projectsService.getProjectById(id);
-    }
-
-    @DeleteMapping("/{project_id}")
-    public void deleteUser(@PathVariable Long id) {
-        projectsService.deleteProject(id);
-    }
+//    @GetMapping("/project_id")
+//    public Optional<ProjectsEntity> getProjectById(@PathVariable Long id) {
+//        return projectsService.getProjectById(id);
+//    }
+//
+//    @DeleteMapping("/project_id")
+//    public void deleteUser(@PathVariable Long id) {
+//        projectsService.deleteProject(id);
+//    }
 }

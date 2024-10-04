@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class ProjectsEntity {
 
     @Id
@@ -19,5 +20,6 @@ public class ProjectsEntity {
 
     @NonNull
     private String description;
+
 }
 

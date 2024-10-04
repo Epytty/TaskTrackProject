@@ -4,3 +4,5 @@ CREATE TABLE IF NOT EXISTS projects
     name VARCHAR(100) NOT NULL ,
     description VARCHAR(254) NOT NULL ,
 );
+
+GRANT ALL ON TABLE projects TO postgres WITH GRANT OPTION;
