@@ -9,10 +9,14 @@
 <a href="/newProject"><button>Create new project</button></a>
 
 <table>
-    <tr th:each="project : ${project}">
-        <td th:text="${project.id}"></td>
-        <td th:text="${project.name}"></td>
-        <td th:text="${project.description}"></td>
+    <tr th:each="project : ${project}" th:object="${project}">
+        <td th:text="*{id}"></td>
+        <td th:text="*{name}"></td>
+        <td th:text="*{description}"></td>
+        <td>
+            <a th:href="@{/projects/{id}/edit(id=*{id})}"><button>Edit</button></a>
+            <a th:href="@{/projects/{id}/delete(id=*{id})}"><button>Delete</button></a>
+        </td>
     </tr>
 </table>
 </body>

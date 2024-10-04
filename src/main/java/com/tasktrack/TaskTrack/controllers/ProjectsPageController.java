@@ -36,13 +36,24 @@ public class ProjectsPageController {
         return "redirect:/projects";
     }
 
-    @GetMapping("/project_id")
-    public Optional<ProjectsEntity> getProjectById(@PathVariable Long id) {
-        return projectsService.getProjectById(id);
+    @GetMapping("/projects/{id}/edit")
+    public String editProjectPage(@PathVariable(value = "id") Long id, Model model) {
+        ProjectsEntity project = projectsService.getProjectById(id);
+        model.addAttribute("project", project);
+        return "editProject";
     }
 
-    @DeleteMapping("/project_id")
-    public void deleteUser(@PathVariable Long id) {
-    projectsService.deleteProject(id);
+    @PostMapping("/projects/{id}/edit")
+    public String saveEditProject(@PathVariable(value = "id") Long id,
+                                  @RequestParam String name,
+                                  @RequestParam String description) {
+        projectsService.saveProject(id, name, description);
+        return "redirect:/projects";
+    }
+
+    @GetMapping("/projects/{id}/delete")
+    public String deleteProject(@PathVariable(value = "id") Long id) {
+        projectsService.deleteProject(id);
+        return "redirect:/projects";
     }
 }
