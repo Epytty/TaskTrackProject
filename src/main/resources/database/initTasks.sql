@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS tasks
+(
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(254) NOT NULL,
+    FOREIGN KEY project_id BIGINT REFERENCES projects(id)
+);
+
+GRANT ALL ON TABLE tasks TO postgres WITH GRANT OPTION;

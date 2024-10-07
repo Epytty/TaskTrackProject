@@ -3,16 +3,14 @@ package com.tasktrack.TaskTrack.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "projects")
+@Table(name = "tasks")
 @Getter
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class ProjectsEntity {
+@AllArgsConstructor
+public class TasksEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +22,9 @@ public class ProjectsEntity {
     @NonNull
     private String description;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TasksEntity> task = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private ProjectsEntity project;
+
 }
 

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Task</title>
+</head>
+<body>
+<form th:action="@{/projects/{id}/newTask(id=${project.id})}" method="post">
+    <table>
+        <tr>
+            <td><p>Заголовок задачи:</p><input class="read" type="text" name="name"></td>
+            <td><p>Описание задачи:</p><input class="read" type="text" name="description"></td>
+        </tr>
+    </table>
+    <button type="submit">Create</button>
+</form>
+<a th:href="@{/projects/{id}(id=${project.id})}"><button type="button">Cancel!</button></a>
+</body>
+</html>

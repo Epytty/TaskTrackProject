@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
+@RequestMapping
 public class ProjectsPageController {
 
     @Autowired
@@ -48,7 +48,7 @@ public class ProjectsPageController {
                                   @RequestParam String name,
                                   @RequestParam String description) {
         projectsService.saveProject(id, name, description);
-        return "redirect:/projects";
+        return "redirect:/projects/{id}";
     }
 
     @GetMapping("/projects/{id}/delete")

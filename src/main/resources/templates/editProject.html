@@ -8,12 +8,13 @@
   <p>Edit project page</p>
   <div th:object="${project}">
     <form th:action="@{/projects/{id}/edit(id=*{id})}" method="post">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" th:value="*{name}"><br><br>
-      <label for="description">Description:</label>
-      <input type="text" id="description" name="description" th:value="*{description}"><br><br>
-      <input type="submit" value="Update">
+      <p for="name">Name:</p>
+      <input name="name" th:value="*{name}">
+      <p for="description">Description:</p>
+      <input name="description" th:value="*{description}">
+      <button type="submit">Save</button>
     </form>
+    <a th:href="@{/projects/{id}(id=*{id})}"><button>Cancel</button></a>
   </div>
   </body>
 </html>
