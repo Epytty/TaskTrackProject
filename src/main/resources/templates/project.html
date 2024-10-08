@@ -5,14 +5,14 @@
     <title>Selected Project</title>
 </head>
 <body>
-<a href="/projects"><button>Cancel</button></a>
+<a th:href="@{/projects}"><button>Cancel</button></a>
 <a th:href="@{/projects/{id}/edit(id=${project.id})}"><button>Edit</button></a>
 <form th:object="${project}">
     <label th:text="*{name}"></label>
     <label th:text="*{description}"></label>
 </form><br>
 
-<a th:href="@{/projects/{id}/newTask(id=${project.id})}"><button>Create new task</button></a>
+<a th:href="@{/projects/{id}/tasks/newTask(id=${project.id})}"><button>Create new task</button></a>
 <table>
     <tr th:each="task : ${task}" th:object="${task}">
         <td th:text="*{id}"></td>

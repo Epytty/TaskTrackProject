@@ -21,7 +21,7 @@ public class TasksController {
     @Autowired
     private TasksService tasksService;
 
-    @GetMapping
+    @GetMapping("/tasks")
     public String selectProject(@PathVariable(value = "id") Long id, Model model) {
         ProjectsEntity project = projectsService.getProjectById(id);
         model.addAttribute("project", project);
@@ -30,7 +30,7 @@ public class TasksController {
         return "project";
     }
 
-    @GetMapping("/newTask")
+    @GetMapping("/tasks/newTask")
     public String newTaskPage(@PathVariable Long id, Model model) {
         ProjectsEntity project = projectsService.getProjectById(id);
         model.addAttribute("project", project);
@@ -38,18 +38,47 @@ public class TasksController {
         return "newTask";
     }
 
-    @PostMapping("/newTask")
-    public String createTask(@PathVariable(value = "id") Long id,
+    @PostMapping("/tasks/newTask")
+    public String createTask(@PathVariable(value = "id") Long taskId,
                              @RequestParam String name,
                              @RequestParam String description) {
-        tasksService.createTask(id, name, description);
-        return "redirect:/projects/{id}";
+        tasksService.createTask(taskId, name, description);
+        return "redirect:/projects/{id}/tasks";
     }
 
-    @GetMapping("/editTask")
-    public String editTaskPage(@PathVariable(value = "id") Long id, Model model) {
-        TasksEntity task = tasksService.getTaskById(id);
+    @GetMapping("/tasks/{taskId}")
+    public String taskPage(@PathVariable(value = "taskId") Long taskId,
+                           @PathVariable(value = "id") Long id,
+                           Model model) {
+        TasksEntity task = tasksService.getTaskById(taskId);
+        ProjectsEntity project = projectsService.getProjectById(id);
+        model.addAttribute("project", project);
         model.addAttribute("task", task);
+        return "task";
+    }
+
+    @GetMapping("/tasks/{taskId}/editTask")
+    public String editTaskPage(@PathVariable(value = "taskId") Long taskId,
+                               @PathVariable(value = "id") Long id,
+                               Model model) {
+        TasksEntity task = tasksService.getTaskById(taskId);
+        ProjectsEntity project = projectsService.getProjectById(id);
+        model.addAttribute("task", task);
+        model.addAttribute("project", project);
         return "editTask";
+    }
+
+    @PostMapping("/tasks/{taskId}/editTask")
+    public String saveTask(@PathVariable(value = "taskId") Long taskId,
+                           @RequestParam String name,
+                           @RequestParam String description) {
+        tasksService.saveTask(taskId, name, description);
+        return "redirect:/projects/{id}/tasks";
+    }
+
+    @GetMapping("/tasks/{taskId}/delete")
+    public String deleteTask(@PathVariable(value = "taskId") Long taskId) {
+        tasksService.deleteTask(taskId);
+        return "redirect:/projects/{id}/tasks";
     }
 }

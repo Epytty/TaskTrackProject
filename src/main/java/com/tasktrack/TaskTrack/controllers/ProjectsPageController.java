@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping
+@RequestMapping("/projects")
 public class ProjectsPageController {
 
     @Autowired
     private ProjectsService projectsService;
 
-    @GetMapping("/projects")
+    @GetMapping
     public String projectsPage(Model model) {
         List<ProjectsEntity> project = projectsService.getAllProjects();
         model.addAttribute("project", project);
@@ -30,28 +30,28 @@ public class ProjectsPageController {
         return "newProject";
     }
 
-    @PostMapping("/newProject")
+    @PostMapping
     public String createProject(@RequestParam String name, @RequestParam String description) {
         projectsService.createProject(name, description);
         return "redirect:/projects";
     }
 
-    @GetMapping("/projects/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editProjectPage(@PathVariable(value = "id") Long id, Model model) {
         ProjectsEntity project = projectsService.getProjectById(id);
         model.addAttribute("project", project);
         return "editProject";
     }
 
-    @PostMapping("/projects/{id}/edit")
+    @PostMapping("/{id}/edit")
     public String saveEditProject(@PathVariable(value = "id") Long id,
                                   @RequestParam String name,
                                   @RequestParam String description) {
         projectsService.saveProject(id, name, description);
-        return "redirect:/projects/{id}";
+        return "redirect:/projects/{id}/tasks";
     }
 
-    @GetMapping("/projects/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteProject(@PathVariable(value = "id") Long id) {
         projectsService.deleteProject(id);
         return "redirect:/projects";

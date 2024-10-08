@@ -14,7 +14,7 @@
       <input name="description" th:value="*{description}">
       <button type="submit">Save</button>
     </form>
-    <a th:href="@{/projects/{id}(id=*{id})}"><button>Cancel</button></a>
+    <a th:href="@{/projects/{id}/tasks(id=*{id})}"><button>Cancel</button></a>
   </div>
   </body>
 </html>

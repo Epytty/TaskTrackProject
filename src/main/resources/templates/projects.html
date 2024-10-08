@@ -6,15 +6,14 @@
 </head>
 <body>
 <p>This is a projects page! Some projects here!</p>
-<a href="/newProject"><button>Create new project</button></a>
-
+<a th:href="@{/projects/newProject}"><button>Create new project</button></a>
 <table>
     <tr th:each="project : ${project}" th:object="${project}">
         <td th:text="*{id}"></td>
         <td th:text="*{name}"></td>
         <td th:text="*{description}"></td>
         <td>
-            <a th:href="@{/projects/{id}(id=*{id})}"><button>Select</button></a>
+            <a th:href="@{/projects/{id}/tasks(id=*{id})}"><button>Select</button></a>
             <a th:href="@{/projects/{id}/delete(id=*{id})}"><button>Delete</button></a>
         </td>
     </tr>

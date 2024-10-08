@@ -5,7 +5,7 @@
     <title>Create New Task</title>
 </head>
 <body>
-<form th:action="@{/projects/{id}/newTask(id=${project.id})}" method="post">
+<form th:action="@{/projects/{id}/tasks/newTask(id=${project.id})}" method="post">
     <table>
         <tr>
             <td><p>Заголовок задачи:</p><input class="read" type="text" name="name"></td>
@@ -14,6 +14,6 @@
     </table>
     <button type="submit">Create</button>
 </form>
-<a th:href="@{/projects/{id}(id=${project.id})}"><button type="button">Cancel!</button></a>
+<a th:href="@{/projects/{id}/tasks(id=${project.id})}"><button type="button">Cancel!</button></a>
 </body>
 </html>

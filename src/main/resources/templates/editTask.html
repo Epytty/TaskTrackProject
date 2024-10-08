@@ -6,15 +6,13 @@
 </head>
 <body>
 <p>Edit task page</p>
-<div th:object="${task}">
-  <form th:action="@{/projects/${project.id}/{id}/editTask(id=*{id})}" method="post">
-    <p for="name">Name:</p>
-    <input name="name" th:value="*{name}">
-    <p for="description">Description:</p>
-    <input name="description" th:value="*{description}">
-    <button type="submit">Save</button>
-  </form>
-  <a th:href="@{/projects/{id}(id=*{id})}"><button>Cancel</button></a>
-</div>
+<form th:action="@{/projects/{id}/tasks/{taskId}/editTask(id=${project.id}, taskId=${task.id})}" method="post">
+  <p for="name">Name:</p>
+  <input name="name" th:value="${task.name}">
+  <p for="description">Description:</p>
+  <input name="description" th:value="${task.description}">
+  <button type="submit">Save</button>
+</form>
+<a th:href="@{/projects/{id}/tasks/{taskId}(id=${project.id}, taskId=${task.id})}"><button type="button">Cancel</button></a>
 </body>
 </html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Selected task</title>
+</head>
+<body>
+<p>Selected task</p>
+<form th:object="${task}">
+  <label th:text="*{name}"></label>
+  <label th:text="*{description}"></label>
+</form>
+<a th:href="@{/projects/{id}/tasks/{taskId}/editTask(id=${project.id}, taskId=${task.id})}"><button type="button">Edit</button></a>
+</body>
+</html>

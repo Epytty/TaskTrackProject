@@ -31,4 +31,15 @@ public class TasksService {
     public TasksEntity getTaskById(Long id) {
         return tasksRepository.findById(id).orElse(null);
     }
+
+    public void saveTask(Long id, String name, String description) {
+        TasksEntity task = getTaskById(id);
+        task.setName(name);
+        task.setDescription(description);
+        tasksRepository.save(task);
+    }
+
+    public void deleteTask(Long id) {
+        tasksRepository.deleteById(id);
+    }
 }
