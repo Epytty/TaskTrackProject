@@ -6,6 +6,7 @@
 </head>
 <body>
 <p>This is a projects page! Some projects here!</p>
+<a th:href="@{/logout}"><button>Logout</button></a>
 <a th:href="@{/projects/newProject}"><button>Create new project</button></a>
 <table>
     <tr th:each="project : ${project}" th:object="${project}">
