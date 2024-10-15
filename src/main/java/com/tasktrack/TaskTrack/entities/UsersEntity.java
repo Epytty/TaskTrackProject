@@ -3,6 +3,9 @@ package com.tasktrack.TaskTrack.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -23,5 +26,8 @@ public class UsersEntity {
     private String password;
 
     @NonNull
-    private String roles;
+    private String role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectsEntity> project = new ArrayList<>();
 }

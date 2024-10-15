@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS users
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     password VARCHAR(100) NOT NULL,
-    roles VARCHAR(100)
+    FOREIGN KEY role_name VARCHAR(100) REFERENCES roles(name),
+    FOREIGN KEY project_id BIGINT REFERENCES projects(id)
 );
 
 GRANT ALL ON TABLE users TO postgres WITH GRANT OPTION;

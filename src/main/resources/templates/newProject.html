@@ -5,15 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-    <form th:action="@{/projects}" method="post">
-        <table>
-            <tr>
-                <td><p>Заголовок проекта:</p><input class="read" type="text" name="name"></td>
-                <td><p>Описание проекта:</p><input class="read" type="text" name="description"></td>
-            </tr>
-        </table>
-        <button type="submit">Create</button>
-    </form>
+<form th:action="@{/projects/newProject}" method="post">
+    <table>
+        <tr>
+            <td><p>Заголовок проекта:</p><input class="read" type="text" name="name"></td>
+            <td><p>Описание проекта:</p><input class="read" type="text" name="description"></td>
+        </tr>
+    </table>
+    <button type="submit">Create</button>
+</form>
     <a href="/projects"><button>Cancel!</button></a>
 </body>
 </html>

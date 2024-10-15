@@ -1,6 +1,7 @@
 package com.tasktrack.TaskTrack.services;
 
 import com.tasktrack.TaskTrack.entities.ProjectsEntity;
+import com.tasktrack.TaskTrack.entities.UsersEntity;
 import com.tasktrack.TaskTrack.repositories.ProjectsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,17 @@ public class ProjectsService {
     @Autowired
     public ProjectsRepository projectsRepository;
 
-    public List<ProjectsEntity> getAllProjects() {
-            return projectsRepository.findAll();
+    @Autowired
+    public UsersService usersService;
+
+    public List<ProjectsEntity> getAllProjects(Long userId) {
+        return projectsRepository.findByUserId(userId);
     }
 
-    public void createProject(String name, String description) {
+    public void createProject(Long userId, String name, String description) {
+        UsersEntity user = usersService.getUserById(userId);
         ProjectsEntity project = new ProjectsEntity(name, description);
+        project.setUser(user);
         projectsRepository.save(project);
     }
 
@@ -35,5 +41,9 @@ public class ProjectsService {
 
     public void deleteProject(Long id) {
         projectsRepository.deleteById(id);
+    }
+
+    public List<ProjectsEntity> getProjectsByUser (Long userId) {
+        return projectsRepository.findByUserId(userId);
     }
 }

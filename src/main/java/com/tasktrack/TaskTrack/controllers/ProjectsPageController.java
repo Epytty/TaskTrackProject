@@ -1,12 +1,16 @@
 package com.tasktrack.TaskTrack.controllers;
 
 import com.tasktrack.TaskTrack.entities.ProjectsEntity;
+import com.tasktrack.TaskTrack.entities.UsersEntity;
+import com.tasktrack.TaskTrack.repositories.ProjectsRepository;
 import com.tasktrack.TaskTrack.services.ProjectsService;
+import com.tasktrack.TaskTrack.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -16,9 +20,16 @@ public class ProjectsPageController {
     @Autowired
     private ProjectsService projectsService;
 
+    @Autowired
+    private ProjectsRepository projectsRepository;
+
+    @Autowired
+    private UsersService usersService;
+
     @GetMapping
-    public String projectsPage(Model model) {
-        List<ProjectsEntity> project = projectsService.getAllProjects();
+    public String getUserProjects(Model model, Principal principal) {
+        UsersEntity user = usersService.findByUsername(principal.getName());
+        List<ProjectsEntity> project = projectsService.getProjectsByUser(user.getId());
         model.addAttribute("project", project);
         return "projects";
     }
@@ -30,11 +41,15 @@ public class ProjectsPageController {
         return "newProject";
     }
 
-    @PostMapping
-    public String createProject(@RequestParam String name, @RequestParam String description) {
-        projectsService.createProject(name, description);
+    @PostMapping("/newProject")
+    public String createProject(@RequestParam String name,
+                                @RequestParam String description,
+                                Principal principal) {
+        UsersEntity user = usersService.findByUsername(principal.getName());
+        projectsService.createProject(user.getId(), name, description);
         return "redirect:/projects";
     }
+
 
     @GetMapping("/{id}/edit")
     public String editProjectPage(@PathVariable(value = "id") Long id, Model model) {

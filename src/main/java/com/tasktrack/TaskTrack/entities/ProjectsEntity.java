@@ -26,5 +26,10 @@ public class ProjectsEntity {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TasksEntity> task = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UsersEntity user;
 }
+
 
