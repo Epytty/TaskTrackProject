@@ -6,7 +6,9 @@
 </head>
 <body>
 <a th:href="@{/projects}"><button>Cancel</button></a>
+<a th:href="@{/projects/{id}/usersList(id=${project.id})}"><button>Users List</button></a>
 <a th:href="@{/projects/{id}/edit(id=${project.id})}"><button>Edit</button></a>
+
 <form th:object="${project}">
     <label th:text="*{name}"></label>
     <label th:text="*{description}"></label>

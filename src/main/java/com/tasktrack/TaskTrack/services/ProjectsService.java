@@ -22,9 +22,10 @@ public class ProjectsService {
     }
 
     public void createProject(Long userId, String name, String description) {
-        UsersEntity user = usersService.getUserById(userId);
+        UsersEntity owner = usersService.getUserById(userId);
         ProjectsEntity project = new ProjectsEntity(name, description);
-        project.setUser(user);
+        project.setOwner(owner);
+        project.getUser().add(owner);
         projectsRepository.save(project);
     }
 
@@ -46,4 +47,13 @@ public class ProjectsService {
     public List<ProjectsEntity> getProjectsByUser (Long userId) {
         return projectsRepository.findByUserId(userId);
     }
+
+    public void addUser(Long projectId, String username) {
+        ProjectsEntity project = getProjectById(projectId);
+        UsersEntity user = usersService.getByUsername(username);
+        project.getUser().add(user);
+        user.getProject().add(project);
+        projectsRepository.save(project);
+    }
+
 }

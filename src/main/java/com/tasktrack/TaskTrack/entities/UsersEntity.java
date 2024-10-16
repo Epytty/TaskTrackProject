@@ -25,9 +25,9 @@ public class UsersEntity {
     @NonNull
     private String password;
 
-    @NonNull
+    @ NonNull
     private String role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(mappedBy = "user")
     private List<ProjectsEntity> project = new ArrayList<>();
 }

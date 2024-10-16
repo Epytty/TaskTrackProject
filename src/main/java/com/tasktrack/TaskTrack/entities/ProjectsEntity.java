@@ -28,8 +28,16 @@ public class ProjectsEntity {
     private List<TasksEntity> task = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UsersEntity user;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private UsersEntity owner;
+
+    @ManyToMany
+    @JoinTable(
+            name = "project_users",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<UsersEntity> user = new ArrayList<>();
 }
 
 

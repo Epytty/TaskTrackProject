@@ -1,5 +1,6 @@
 package com.tasktrack.TaskTrack.services;
 
+import com.tasktrack.TaskTrack.entities.ProjectsEntity;
 import com.tasktrack.TaskTrack.entities.TasksEntity;
 import com.tasktrack.TaskTrack.entities.UsersEntity;
 import com.tasktrack.TaskTrack.repositories.UsersRepository;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +57,17 @@ public class UsersService implements UserDetailsService {
         usersRepository.save(user);
     }
 
-    public UsersEntity findByUsername(String username) {
+    public UsersEntity getByUsername(String username) {
         return usersRepository.findByUsername(username).orElse(null);
+    }
+
+    public List<UsersEntity> getProjectUsers(ProjectsEntity project) {
+        List<UsersEntity> users = new ArrayList<>();
+        for (UsersEntity user : usersRepository.findAll()) {
+            if (user.getProject().contains(project)) {
+                users.add(user);
+            }
+        }
+        return users;
     }
 }

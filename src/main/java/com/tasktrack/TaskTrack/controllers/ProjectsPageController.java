@@ -21,15 +21,12 @@ public class ProjectsPageController {
     private ProjectsService projectsService;
 
     @Autowired
-    private ProjectsRepository projectsRepository;
-
-    @Autowired
     private UsersService usersService;
 
     @GetMapping
     public String getUserProjects(Model model, Principal principal) {
-        UsersEntity user = usersService.findByUsername(principal.getName());
-        List<ProjectsEntity> project = projectsService.getProjectsByUser(user.getId());
+        UsersEntity owner = usersService.getByUsername(principal.getName());
+        List<ProjectsEntity> project = projectsService.getProjectsByUser(owner.getId());
         model.addAttribute("project", project);
         return "projects";
     }
@@ -45,8 +42,8 @@ public class ProjectsPageController {
     public String createProject(@RequestParam String name,
                                 @RequestParam String description,
                                 Principal principal) {
-        UsersEntity user = usersService.findByUsername(principal.getName());
-        projectsService.createProject(user.getId(), name, description);
+        UsersEntity owner = usersService.getByUsername(principal.getName());
+        projectsService.createProject(owner.getId(), name, description);
         return "redirect:/projects";
     }
 
@@ -70,5 +67,28 @@ public class ProjectsPageController {
     public String deleteProject(@PathVariable(value = "id") Long id) {
         projectsService.deleteProject(id);
         return "redirect:/projects";
+    }
+
+    @GetMapping("/{id}/usersList")
+    public String projectUsersListPage(@PathVariable(value = "id") Long id, Model model) {
+        ProjectsEntity project = projectsService.getProjectById(id);
+        List<UsersEntity> user = usersService.getProjectUsers(project);
+        model.addAttribute("project", project);
+        model.addAttribute("user", user);
+        return "usersList";
+    }
+
+    @GetMapping("/{id}/usersList/addUser")
+    public String addUserPage(@PathVariable(value = "id") Long id, Model model) {
+        ProjectsEntity project = projectsService.getProjectById(id);
+        model.addAttribute("project", project);
+        return "addUser";
+    }
+
+    @PostMapping("/{id}/usersList/addUser")
+    public String addUser(@PathVariable(value = "id") Long projectId,
+                          @RequestParam String username) {
+        projectsService.addUser(projectId, username);
+        return "redirect:/projects/{id}/usersList";
     }
 }

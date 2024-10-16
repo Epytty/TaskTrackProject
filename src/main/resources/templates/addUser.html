@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/projects/{id}/usersList/addUser(id=${project.id})}" method="post">
+  <table>
+    <tr>
+      <td><p>Enter username or email: </p></td>
+      <td><input class="read" type="text" name="username"></td>
+    </tr>
+  </table>
+  <button type="submit">Add user</button>
+</form>
+<a th:href="@{/projects/{id}/usersList(id=${project.id})}"><button>Cancel!</button></a>
+</body>
+</html>
