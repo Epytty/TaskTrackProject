@@ -13,6 +13,7 @@
         <td th:text="${user.id}">ID</td>
         <td th:text="${user.username}">Username</td>
         <td th:text="${user.role}">Role</td>
+        <td><a th:href="@{/projects/{projectId}/usersList/exclude/{userId}(projectId=${project.id}, userId=${user.id})}"><button>Exclude</button></a></td>
     </tr>
 </table>
 </body>

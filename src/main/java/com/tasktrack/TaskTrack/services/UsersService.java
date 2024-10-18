@@ -34,10 +34,11 @@ public class UsersService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
     }
 
-    public void registerUser(String username, String password) {
+    public void registerUser(String username, String email, String password) {
         UsersEntity user = new UsersEntity();
         String role = rolesService.getRoleNameById(1L);
         user.setUsername(username);
+        user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(role);
         usersRepository.save(user);
@@ -59,6 +60,10 @@ public class UsersService implements UserDetailsService {
 
     public UsersEntity getByUsername(String username) {
         return usersRepository.findByUsername(username).orElse(null);
+    }
+
+    public UsersEntity getByEmail(String email) {
+        return usersRepository.findByEmail(email).orElse(null);
     }
 
     public List<UsersEntity> getProjectUsers(ProjectsEntity project) {

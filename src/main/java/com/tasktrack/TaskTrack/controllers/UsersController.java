@@ -31,8 +31,10 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam String username, @RequestParam String password) {
-        usersService.registerUser(username, password);
+    public String registerUser(@RequestParam String username,
+                               @RequestParam String email,
+                               @RequestParam String password) {
+        usersService.registerUser(username, email, password);
         return "redirect:/login";
     }
 
@@ -44,24 +46,6 @@ public class UsersController {
     @GetMapping("/logout")
     public String logout(Model model) {
         return "redirect:/";
-    }
-
-    @GetMapping("/adminPanel")
-    @PreAuthorize("hasAnyAuthority('Head Director', 'Administrator', 'project Manager')")
-    public String adminPanelPage(Model model) {
-        List<UsersEntity> user = usersService.getAllUsers();
-        List<RolesEntity> role = rolesService.getAllRoles();
-        model.addAttribute("user", user);
-        model.addAttribute("role", role);
-        return "adminPanel";
-    }
-
-    @PostMapping("/adminPanel")
-    public String saveUser(@RequestParam Long id, @RequestParam String role, Model model) {
-        UsersEntity user = usersService.getUserById(id);
-        usersService.saveUserRole(id, role);
-        model.addAttribute("user", user);
-        return "redirect:/adminPanel";
     }
 
 }

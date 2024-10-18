@@ -68,27 +68,4 @@ public class ProjectsPageController {
         projectsService.deleteProject(id);
         return "redirect:/projects";
     }
-
-    @GetMapping("/{id}/usersList")
-    public String projectUsersListPage(@PathVariable(value = "id") Long id, Model model) {
-        ProjectsEntity project = projectsService.getProjectById(id);
-        List<UsersEntity> user = usersService.getProjectUsers(project);
-        model.addAttribute("project", project);
-        model.addAttribute("user", user);
-        return "usersList";
-    }
-
-    @GetMapping("/{id}/usersList/addUser")
-    public String addUserPage(@PathVariable(value = "id") Long id, Model model) {
-        ProjectsEntity project = projectsService.getProjectById(id);
-        model.addAttribute("project", project);
-        return "addUser";
-    }
-
-    @PostMapping("/{id}/usersList/addUser")
-    public String addUser(@PathVariable(value = "id") Long projectId,
-                          @RequestParam String username) {
-        projectsService.addUser(projectId, username);
-        return "redirect:/projects/{id}/usersList";
-    }
 }

@@ -11,5 +11,6 @@
   <label th:text="*{description}"></label>
 </form>
 <a th:href="@{/projects/{id}/tasks/{taskId}/editTask(id=${project.id}, taskId=${task.id})}"><button type="button">Edit</button></a>
+<a th:href="@{/projects/{id}/tasks(id=${project.id})}"><button>Cancel!</button></a>
 </body>
 </html>

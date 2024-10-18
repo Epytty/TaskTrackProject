@@ -48,12 +48,26 @@ public class ProjectsService {
         return projectsRepository.findByUserId(userId);
     }
 
-    public void addUser(Long projectId, String username) {
-        ProjectsEntity project = getProjectById(projectId);
-        UsersEntity user = usersService.getByUsername(username);
-        project.getUser().add(user);
-        user.getProject().add(project);
-        projectsRepository.save(project);
+    public void addUser(Long id, String userDesignation) {
+        ProjectsEntity project = getProjectById(id);
+        UsersEntity user = null;
+        if (userDesignation.contains("@")) {
+            user = usersService.getByEmail(userDesignation);
+        } else {
+            user = usersService.getByUsername(userDesignation);
+        }
+        if (user != null) {
+            project.getUser().add(user);
+            user.getProject().add(project);
+            projectsRepository.save(project);
+        }
     }
 
+    public void excludeUser(Long projectId, Long userId) {
+        ProjectsEntity project = getProjectById(projectId);
+        UsersEntity user = usersService.getUserById(userId);
+        project.getUser().remove(user);
+        user.getProject().remove(project);
+        projectsRepository.save(project);
+    }
 }

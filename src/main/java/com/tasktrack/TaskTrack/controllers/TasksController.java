@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/projects/{id}")
+@RequestMapping("/projects/{id}/tasks")
 public class TasksController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class TasksController {
     @Autowired
     private TasksService tasksService;
 
-    @GetMapping("/tasks")
+    @GetMapping
     public String selectProject(@PathVariable(value = "id") Long id, Model model) {
         ProjectsEntity project = projectsService.getProjectById(id);
         model.addAttribute("project", project);
@@ -30,7 +30,7 @@ public class TasksController {
         return "project";
     }
 
-    @GetMapping("/tasks/newTask")
+    @GetMapping("/newTask")
     public String newTaskPage(@PathVariable Long id, Model model) {
         ProjectsEntity project = projectsService.getProjectById(id);
         model.addAttribute("project", project);
@@ -38,7 +38,7 @@ public class TasksController {
         return "newTask";
     }
 
-    @PostMapping("/tasks/newTask")
+    @PostMapping("/newTask")
     public String createTask(@PathVariable(value = "id") Long taskId,
                              @RequestParam String name,
                              @RequestParam String description) {
@@ -46,7 +46,7 @@ public class TasksController {
         return "redirect:/projects/{id}/tasks";
     }
 
-    @GetMapping("/tasks/{taskId}")
+    @GetMapping("/{taskId}")
     public String taskPage(@PathVariable(value = "taskId") Long taskId,
                            @PathVariable(value = "id") Long id,
                            Model model) {
@@ -57,7 +57,7 @@ public class TasksController {
         return "task";
     }
 
-    @GetMapping("/tasks/{taskId}/editTask")
+    @GetMapping("/{taskId}/editTask")
     public String editTaskPage(@PathVariable(value = "taskId") Long taskId,
                                @PathVariable(value = "id") Long id,
                                Model model) {
@@ -68,7 +68,7 @@ public class TasksController {
         return "editTask";
     }
 
-    @PostMapping("/tasks/{taskId}/editTask")
+    @PostMapping("/{taskId}/editTask")
     public String saveTask(@PathVariable(value = "taskId") Long taskId,
                            @RequestParam String name,
                            @RequestParam String description) {
@@ -76,7 +76,7 @@ public class TasksController {
         return "redirect:/projects/{id}/tasks";
     }
 
-    @GetMapping("/tasks/{taskId}/delete")
+    @GetMapping("/{taskId}/delete")
     public String deleteTask(@PathVariable(value = "taskId") Long taskId) {
         tasksService.deleteTask(taskId);
         return "redirect:/projects/{id}/tasks";
