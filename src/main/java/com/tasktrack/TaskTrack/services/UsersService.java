@@ -1,5 +1,6 @@
 package com.tasktrack.TaskTrack.services;
 
+import com.tasktrack.TaskTrack.entities.ProjectUsersEntity;
 import com.tasktrack.TaskTrack.entities.ProjectsEntity;
 import com.tasktrack.TaskTrack.entities.TasksEntity;
 import com.tasktrack.TaskTrack.entities.UsersEntity;
@@ -66,13 +67,4 @@ public class UsersService implements UserDetailsService {
         return usersRepository.findByEmail(email).orElse(null);
     }
 
-    public List<UsersEntity> getProjectUsers(ProjectsEntity project) {
-        List<UsersEntity> users = new ArrayList<>();
-        for (UsersEntity user : usersRepository.findAll()) {
-            if (user.getProject().contains(project)) {
-                users.add(user);
-            }
-        }
-        return users;
-    }
 }

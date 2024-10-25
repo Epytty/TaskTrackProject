@@ -25,8 +25,8 @@ public class ProjectsPageController {
 
     @GetMapping
     public String getUserProjects(Model model, Principal principal) {
-        UsersEntity owner = usersService.getByUsername(principal.getName());
-        List<ProjectsEntity> project = projectsService.getProjectsByUser(owner.getId());
+        UsersEntity user = usersService.getByUsername(principal.getName());
+        List<ProjectsEntity> project = projectsService.getProjectsByUser(user.getId());
         model.addAttribute("project", project);
         return "projects";
     }
@@ -42,8 +42,8 @@ public class ProjectsPageController {
     public String createProject(@RequestParam String name,
                                 @RequestParam String description,
                                 Principal principal) {
-        UsersEntity owner = usersService.getByUsername(principal.getName());
-        projectsService.createProject(owner.getId(), name, description);
+        UsersEntity user = usersService.getByUsername(principal.getName());
+        projectsService.createProject(user.getId(), name, description);
         return "redirect:/projects";
     }
 

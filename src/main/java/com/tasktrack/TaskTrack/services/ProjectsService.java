@@ -1,5 +1,6 @@
 package com.tasktrack.TaskTrack.services;
 
+import com.tasktrack.TaskTrack.entities.ProjectUsersEntity;
 import com.tasktrack.TaskTrack.entities.ProjectsEntity;
 import com.tasktrack.TaskTrack.entities.UsersEntity;
 import com.tasktrack.TaskTrack.repositories.ProjectsRepository;
@@ -18,14 +19,19 @@ public class ProjectsService {
     public UsersService usersService;
 
     public List<ProjectsEntity> getAllProjects(Long userId) {
-        return projectsRepository.findByUserId(userId);
+        return projectsRepository.findByProjectUsers_User_Id(userId);
     }
 
     public void createProject(Long userId, String name, String description) {
         UsersEntity owner = usersService.getUserById(userId);
         ProjectsEntity project = new ProjectsEntity(name, description);
         project.setOwner(owner);
-        project.getUser().add(owner);
+        ProjectUsersEntity projectOwner = new ProjectUsersEntity();
+        projectOwner.setProject(project);
+        projectOwner.setUser(owner);
+        projectOwner.setProjectRole("Owner");
+        project.getProjectUsers().add(projectOwner);
+
         projectsRepository.save(project);
     }
 
@@ -44,12 +50,12 @@ public class ProjectsService {
         projectsRepository.deleteById(id);
     }
 
-    public List<ProjectsEntity> getProjectsByUser (Long userId) {
-        return projectsRepository.findByUserId(userId);
+    public List<ProjectsEntity> getProjectsByUser(Long id) {
+        return projectsRepository.findByProjectUsers_User_Id(id);
     }
 
-    public void addUser(Long id, String userDesignation) {
-        ProjectsEntity project = getProjectById(id);
+    public void addUser (Long projectId, String userDesignation) {
+        ProjectsEntity project = getProjectById(projectId);
         UsersEntity user = null;
         if (userDesignation.contains("@")) {
             user = usersService.getByEmail(userDesignation);
@@ -57,17 +63,24 @@ public class ProjectsService {
             user = usersService.getByUsername(userDesignation);
         }
         if (user != null) {
-            project.getUser().add(user);
-            user.getProject().add(project);
+            ProjectUsersEntity projectUser  = new ProjectUsersEntity();
+            projectUser.setProject(project);
+            projectUser.setUser(user);
+            projectUser.setProjectRole("Project User");
+            project.getProjectUsers().add(projectUser );
             projectsRepository.save(project);
         }
     }
 
     public void excludeUser(Long projectId, Long userId) {
         ProjectsEntity project = getProjectById(projectId);
-        UsersEntity user = usersService.getUserById(userId);
-        project.getUser().remove(user);
-        user.getProject().remove(project);
-        projectsRepository.save(project);
+        ProjectUsersEntity projectUser  = project.getProjectUsers().stream()
+                .filter(pu -> pu.getUser().getId().equals(userId))
+                .findFirst()
+                .orElse(null);
+        if (projectUser  != null) {
+            project.getProjectUsers().remove(projectUser);
+            projectsRepository.save(project);
+        }
     }
 }

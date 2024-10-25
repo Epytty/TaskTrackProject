@@ -31,13 +31,8 @@ public class ProjectsEntity {
     @JoinColumn(name = "owner_id", nullable = false)
     private UsersEntity owner;
 
-    @ManyToMany
-    @JoinTable(
-            name = "project_users",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<UsersEntity> user = new ArrayList<>();
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectUsersEntity> projectUsers = new ArrayList<>();
 }
 
 

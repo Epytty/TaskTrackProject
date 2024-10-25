@@ -28,9 +28,9 @@ public class UsersEntity {
     @NonNull
     private String password;
 
-    @ NonNull
+    @NonNull
     private String role;
 
-    @ManyToMany(mappedBy = "user")
-    private List<ProjectsEntity> project = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<ProjectUsersEntity> projectUsers = new ArrayList<>();
 }

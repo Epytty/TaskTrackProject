@@ -1,5 +1,6 @@
 package com.tasktrack.TaskTrack.controllers;
 
+import com.tasktrack.TaskTrack.entities.ProjectUsersEntity;
 import com.tasktrack.TaskTrack.entities.ProjectsEntity;
 import com.tasktrack.TaskTrack.entities.UsersEntity;
 import com.tasktrack.TaskTrack.services.ProjectsService;
@@ -24,9 +25,9 @@ public class SelectedProjectController {
     @GetMapping
     public String projectUsersListPage(@PathVariable(value = "id") Long id, Model model) {
         ProjectsEntity project = projectsService.getProjectById(id);
-        List<UsersEntity> user = usersService.getProjectUsers(project);
+        List<ProjectUsersEntity> projectUsers = project.getProjectUsers();
         model.addAttribute("project", project);
-        model.addAttribute("user", user);
+        model.addAttribute("projectUsers", projectUsers);
         return "usersList";
     }
 

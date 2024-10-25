@@ -9,11 +9,11 @@
 <a th:href="@{/projects/{id}/usersList/addUser(id=${project.id})}"><button>Add Users</button></a>
 <a th:href="@{/projects/{id}/tasks(id=${project.id})}"><button>Cancel!</button></a>
 <table>
-    <tr th:each="user : ${user}">
-        <td th:text="${user.id}">ID</td>
-        <td th:text="${user.username}">Username</td>
-        <td th:text="${user.role}">Role</td>
-        <td><a th:href="@{/projects/{projectId}/usersList/exclude/{userId}(projectId=${project.id}, userId=${user.id})}"><button>Exclude</button></a></td>
+    <tr th:each="projectUser : ${projectUsers}">
+        <td th:text="${projectUser.user.id}">ID</td>
+        <td th:text="${projectUser.user.username}">Username</td>
+        <td th:text="${projectUser .projectRole}">Role</td>
+        <td><a th:href="@{/projects/{projectId}/usersList/exclude/{userId}(projectId=${project.id}, userId=${projectUser .user.id})}"><button>Exclude</button></a></td>
     </tr>
 </table>
 </body>
