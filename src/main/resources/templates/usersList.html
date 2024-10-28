@@ -1,20 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Users List</title>
 </head>
 <body>
 <h1>Users List</h1>
-<a th:href="@{/projects/{id}/usersList/addUser(id=${project.id})}"><button>Add Users</button></a>
+<a th:href="@{/projects/{id}/usersList/addUser  (id=${project.id})}"><button>Add Users</button></a>
 <a th:href="@{/projects/{id}/tasks(id=${project.id})}"><button>Cancel!</button></a>
 <table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
     <tr th:each="projectUser : ${projectUsers}">
         <td th:text="${projectUser.user.id}">ID</td>
         <td th:text="${projectUser.user.username}">Username</td>
-        <td th:text="${projectUser .projectRole}">Role</td>
-        <td><a th:href="@{/projects/{projectId}/usersList/exclude/{userId}(projectId=${project.id}, userId=${projectUser .user.id})}"><button>Exclude</button></a></td>
+        <td th:text="${projectUser.projectRole}">Role</td>
+        <td>
+            <form th:action="@{/projects/{projectId}/usersList(projectId=${project.id})}" method="post">
+                <input type="hidden" name="userId" th:value="${projectUser.user.id}" />
+                <select name="newRole" required>
+                    <option value="Owner" th:selected="${projectUser.projectRole == 'Owner'}">Owner</option>
+                    <option value="Project Member" th:selected="${projectUser.projectRole == 'Project Member'}">Project Member</option>
+                    <option value="Power User" th:selected="${projectUser.projectRole == 'Power User'}">Power User</option>
+                </select>
+                <button type="submit">Change Role</button>
+            </form>
+        </td>
+        <td>
+            <a th:href="@{/projects/{projectId}/usersList/exclude/{userId}(projectId=${project.id}, userId=${projectUser .user.id})}">
+                <button>Exclude</button>
+            </a>
+        </td>
     </tr>
+    </tbody>
 </table>
 </body>
 </html>

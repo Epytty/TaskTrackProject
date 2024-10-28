@@ -31,7 +31,6 @@ public class ProjectsService {
         projectOwner.setUser(owner);
         projectOwner.setProjectRole("Owner");
         project.getProjectUsers().add(projectOwner);
-
         projectsRepository.save(project);
     }
 
@@ -43,6 +42,10 @@ public class ProjectsService {
         ProjectsEntity project = getProjectById(id);
         project.setName(name);
         project.setDescription(description);
+        projectsRepository.save(project);
+    }
+
+    public void saveProjectChanges(ProjectsEntity project) {
         projectsRepository.save(project);
     }
 
@@ -82,5 +85,10 @@ public class ProjectsService {
             project.getProjectUsers().remove(projectUser);
             projectsRepository.save(project);
         }
+    }
+
+    public boolean isUserOwner(Long projectId, Long userId) {
+        ProjectsEntity project = getProjectById(projectId);
+        return project.getOwner().getId().equals(userId);
     }
 }
