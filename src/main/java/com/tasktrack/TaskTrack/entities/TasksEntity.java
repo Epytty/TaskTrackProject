@@ -5,11 +5,10 @@ import lombok.*;
 
 @Entity
 @Table(name = "tasks")
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class TasksEntity {
 
     @Id

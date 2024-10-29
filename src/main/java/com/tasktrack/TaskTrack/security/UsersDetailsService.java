@@ -1,4 +1,4 @@
-package com.tasktrack.TaskTrack.services;
+package com.tasktrack.TaskTrack.security;
 
 import com.tasktrack.TaskTrack.entities.UsersEntity;
 import lombok.AllArgsConstructor;

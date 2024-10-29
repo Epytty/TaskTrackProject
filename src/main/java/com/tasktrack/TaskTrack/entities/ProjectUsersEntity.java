@@ -5,11 +5,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "project_users")
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectUsersEntity {
 
     @Id

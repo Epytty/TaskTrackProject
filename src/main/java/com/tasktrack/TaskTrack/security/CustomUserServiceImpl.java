@@ -1,7 +1,6 @@
 package com.tasktrack.TaskTrack.security;
 
 import com.tasktrack.TaskTrack.repositories.UsersRepository;
-import com.tasktrack.TaskTrack.services.UsersDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

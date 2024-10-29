@@ -4,7 +4,7 @@ import com.tasktrack.TaskTrack.entities.ProjectsEntity;
 import com.tasktrack.TaskTrack.entities.TasksEntity;
 import com.tasktrack.TaskTrack.services.ProjectsService;
 import com.tasktrack.TaskTrack.services.TasksService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +13,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/projects/{id}/tasks")
+@RequiredArgsConstructor
 public class TasksController {
 
-    @Autowired
-    private ProjectsService projectsService;
-
-    @Autowired
-    private TasksService tasksService;
+    private final ProjectsService projectsService;
+    private final TasksService tasksService;
 
     @GetMapping
     public String selectProject(@PathVariable(value = "id") Long id, Model model) {

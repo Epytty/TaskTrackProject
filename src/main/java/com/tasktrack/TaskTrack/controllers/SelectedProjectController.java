@@ -6,7 +6,7 @@ import com.tasktrack.TaskTrack.entities.ProjectsEntity;
 import com.tasktrack.TaskTrack.entities.UsersEntity;
 import com.tasktrack.TaskTrack.services.ProjectsService;
 import com.tasktrack.TaskTrack.services.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,13 +18,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/projects/{id}/usersList")
+@RequiredArgsConstructor
 public class SelectedProjectController {
 
-    @Autowired
-    private ProjectsService projectsService;
-
-    @Autowired
-    private UsersService usersService;
+    private final ProjectsService projectsService;
+    private final UsersService usersService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('Owner')")
@@ -47,7 +45,6 @@ public class SelectedProjectController {
     public String updateUserRole(@PathVariable(value = "projectId") Long projectId,
                                  @RequestParam Long userId,
                                  @RequestParam String newRole) {
-        // Проверка, является ли текущий пользователь владельцем проекта
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UsersEntity currentUser  = usersService.getByUsername(authentication.getName());
 

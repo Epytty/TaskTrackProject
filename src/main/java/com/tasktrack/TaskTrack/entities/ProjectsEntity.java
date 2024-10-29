@@ -8,10 +8,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "projects")
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProjectsEntity {
 
     @Id

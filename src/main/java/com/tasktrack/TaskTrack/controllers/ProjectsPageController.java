@@ -2,10 +2,9 @@ package com.tasktrack.TaskTrack.controllers;
 
 import com.tasktrack.TaskTrack.entities.ProjectsEntity;
 import com.tasktrack.TaskTrack.entities.UsersEntity;
-import com.tasktrack.TaskTrack.repositories.ProjectsRepository;
 import com.tasktrack.TaskTrack.services.ProjectsService;
 import com.tasktrack.TaskTrack.services.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +14,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/projects")
+@RequiredArgsConstructor
 public class ProjectsPageController {
 
-    @Autowired
-    private ProjectsService projectsService;
-
-    @Autowired
-    private UsersService usersService;
+    private final ProjectsService projectsService;
+    private final UsersService usersService;
 
     @GetMapping
     public String getUserProjects(Model model, Principal principal) {

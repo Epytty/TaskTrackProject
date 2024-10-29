@@ -2,9 +2,9 @@ package com.tasktrack.TaskTrack.controllers;
 
 import com.tasktrack.TaskTrack.entities.RolesEntity;
 import com.tasktrack.TaskTrack.entities.UsersEntity;
-import com.tasktrack.TaskTrack.services.RolesService;
+import com.tasktrack.TaskTrack.services.impl.RolesServiceImpl;
 import com.tasktrack.TaskTrack.services.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +17,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/adminPanel")
+@RequiredArgsConstructor
 public class AdminController {
 
-    @Autowired
-    private UsersService usersService;
-
-    @Autowired
-    private RolesService rolesService;
+    private final UsersService usersService;
+    private final RolesServiceImpl rolesService;
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('Head Director', 'Administrator')")
